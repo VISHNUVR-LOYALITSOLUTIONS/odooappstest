@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<odoo>
+  <record id="module_cabbook_category" model="ir.module.category">
+    <field name="name">Cab Management</field>
+  </record>
+
+  <!-- Cab Management User Group -->
+  <record id="cabbook_group_user" model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id"
+           ref="module_cabbook_category"/>
+    <field name="implied_ids"
+           eval="[(4, ref('base.group_user'))]"/>
+  </record>
+
+  <!-- Cab Management Manager Group -->
+  <record id="group_cabbook_manager" model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id" ref="module_cabbook_category"/>
+    <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+  </record>
+
+    <!--Assigned users ( as driver) can only view cab booking details in assigned, running, done-->
+    <!-- Managers can view all details in all state -->
+  <record id="rule_cab_management_user" model="ir.rule">
+    <field name="name">Cab Management User</field>
+    <field name="model_id" ref="model_cab_booking_cab_booking" />
+    <field name="groups" eval="[(4, ref('cabbook_group_user'))]"/>
+    <field name="domain_force">[('state','in',['assigned','running','done']),'|', ('driver','=',False),
+                      ('driver','=',user.id)]</field>
+  </record>
+
+</odoo>

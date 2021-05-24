@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_cab_booking_template">
+        <t t-call="web.html_container">
+<!--            <t t-set="data_report_margin_top" t-value="12"/>-->
+<!--            <t t-set="data_report_header_spacing" t-value="9"/>-->
+<!--            <t t-set="data_report_dpi" t-value="110"/>-->
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h3>Cab Booking Report</h3>
+                    <t t-if="cab">
+                       <div style="text-align:left;color:black!important;"><strong><p>Cab:<span t-esc="cab"/></p></strong></div>
+                    </t>
+                    <t t-if="driver">
+                       <div style="text-align:left;color:black!important;"><strong><p>Driver:<span t-esc="driver"/></p></strong></div>
+                    </t>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <t t-if="driver ==false">
+                                    <th>Driver</th>
+                                </t>
+                                <t t-if="cab ==false">
+                                    <th>Cab</th>
+                                </t>
+                                <th>Invoice Amount</th>
+                                <th>Date start</th>
+                                <th>Date End</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <t t-foreach="lines" t-as="line">
+                            <tbody>
+                                <tr>
+                                    <t t-if="driver ==false">
+                                        <td><span t-esc="line['driver']"/></td>
+                                    </t>
+                                    <t t-if="cab ==false">
+                                        <td><span t-esc="line['cab']"/></td>
+                                    </t>
+                                    <td><span t-esc="line['invoice_amount']"/></td>
+                                    <td><span t-esc="line['starting_date']"/></td>
+                                    <td><span t-esc="line['ending_date']"/></td>
+                                    <td><span t-esc="line['state']"/></td>
+                                </tr>
+                            </tbody>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <data>
+        <report
+            id="action_report_cab_booking"
+            model="cab_booking.cab_booking"
+            string="Cab Booking Report"
+            report_type="qweb-pdf"
+            name="cab_booking.report_cab_booking_template"
+            file="cab_booking.report_cab_booking_template"
+            menu = "False"
+            />
+    </data>
+
+</odoo>

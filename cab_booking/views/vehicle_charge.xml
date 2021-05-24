@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="fleet_vehicle_inherited_view" model="ir.ui.view">
+            <field name="name">c.agent.view</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_view_form"/>
+            <field name="arch" type="xml">
+            <!-- find field model_year and add the field product_id and hr_rent after it -->
+                <xpath expr="//field[@name='model_year']" position="after">
+                    <field name="product_id"/>
+                    <field name="hr_rent" string="Hourly billing rate"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
